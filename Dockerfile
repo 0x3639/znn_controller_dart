@@ -6,18 +6,20 @@ WORKDIR /app
 COPY pubspec.* ./
 RUN dart pub get
 
-# Copy app source code and AOT compile it.
+# Copy app source code and compile it.
 COPY . .
 # Ensure packages are still up-to-date if anything has changed
 RUN dart pub get --offline
-RUN dart compile exe bin/server.dart -o bin/server
+RUN dart compile exe -o znn-controller bin/znn_controller.dart
 
-# Build minimal serving image from AOT-compiled `/server` and required system
-# libraries and configuration files stored in `/runtime/` from the build stage.
-FROM scratch
-COPY --from=build /runtime/ /
-COPY --from=build /app/bin/server /app/bin/
+# Build minimal serving image from gcr 
+FROM gcr.io/distroless/base
+COPY --from=build /app /app
+CMD ["/znn-controller"]
 
-# Start server.
-EXPOSE 8080
-CMD ["/app/bin/server"]
+VOLUME /root/.znn
+
+EXPOSE 35995/tcp
+EXPOSE 35995/udp
+EXPOSE 35997/tcp
+EXPOSE 35998/tcp
