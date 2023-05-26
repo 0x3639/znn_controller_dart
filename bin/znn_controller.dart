@@ -14,7 +14,7 @@ import 'package:znn_sdk_dart/znn_sdk_dart.dart';
 const znnDaemon = 'znnd';
 const znnSource = 'go-zenon';
 const znnService = 'go-zenon.service';
-const znnGithubUrl = 'https://github.com/zenon-network/go-zenon';
+const znnGithubUrl = 'https://github.com/hypercore-one/go-zenon';
 
 const goLinuxDlUrl = 'https://go.dev/dl/go1.20.3.linux-amd64.tar.gz';
 const goLinuxSHA256Checksum =
